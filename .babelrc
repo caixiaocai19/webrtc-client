@@ -1,0 +1,12 @@
+{
+    "presets": [
+      ["@babel/env", {
+        // 指定需要兼容的浏览器类型和版本
+        "targets": {
+          "browsers": ["last 2 versions"]
+        }
+      }],
+      "@babel/react" // 解析jsx
+    ]
+  }
+  
