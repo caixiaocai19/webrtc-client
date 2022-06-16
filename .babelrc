@@ -1,12 +1,12 @@
+// .babelrc
 {
-    "presets": [
-      ["@babel/env", {
-        // 指定需要兼容的浏览器类型和版本
-        "targets": {
-          "browsers": ["last 2 versions"]
-        }
-      }],
-      "@babel/react" // 解析jsx
-    ]
-  }
-  
+  "presets": [
+    "@babel/preset-env",
+    "@babel/preset-react",
+    "@babel/preset-typescript"// 处理typescript
+  ],
+  "plugins": [
+    "@babel/proposal-object-rest-spread", // 处理对象的rest写法
+    "@babel/proposal-class-properties" // 处理类里面的箭头函数绑定，static属性等 
+  ]
+}

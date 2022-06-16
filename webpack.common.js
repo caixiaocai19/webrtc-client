@@ -4,7 +4,7 @@ const HTMLWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const devMode = process.env.NODE_ENV === "development"; // 命令行设置的值
 module.exports = {
-  entry: path.resolve(__dirname, "./src/main.js"),
+  entry: path.resolve(__dirname, "./src/main.tsx"),
   module: {
     rules: [
       {
@@ -17,7 +17,7 @@ module.exports = {
         },
       },
       {
-        test: /\.(js)x?$/,
+        test: /\.(js|ts)x?$/,//tsx或者jsx都可以
         use: ["babel-loader"],
         exclude: /node-modules/,
       },
