@@ -57,4 +57,10 @@ module.exports = {
       chunks: "all",
     },
   },
+  resolve:{
+    extensions:['.jsx','.js','.json'],//对于这些文件的引入可以省略其文件后缀
+    alias:{
+        '@':path.resolve(__dirname,'src')
+    }
+  }
 };
