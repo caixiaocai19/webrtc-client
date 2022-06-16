@@ -1,8 +1,8 @@
 const path = require("path");
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-const HTMLWebpackPlugin = require("html-webpack-plugin");
-module.exports = {
-  entry: "./src/main.js",
+const { merge } = require("webpack-merge");
+const common = require("./webpack.common.js");
+module.exports = merge(common, {
+  mode: "development",
   output: {
     filename: "[name].js",
     path: path.resolve(__dirname, "dist"),
@@ -39,37 +39,34 @@ module.exports = {
           },
         ],
       },
-      {
-        test: /\.(js)x?$/,
-        use: ["babel-loader"],
-        exclude: /node-modules/,
-      },
     ],
   },
-  plugins: [
-    new HTMLWebpackPlugin({
-      inject: true, // 所有js脚本放于body之后
-      hash: true, // 为静态资源生成hash，用于清楚缓存
-      cache: true, // 仅在文件被更改时发出文件
-      title: "react admin",
-      filename: "index.html",
-      template: path.resolve(__dirname, "./public/index.html"),
-      minify: {
-        collapseWhitespace: true, // 折叠空白
-        removeComments: true, // 删除注释
-        removeRedundantAttributes: true,
-        removeScriptTypeAttributes: true,
-        removeStyleLinkTypeAttributes: true,
-      },
-    }),
-    new CleanWebpackPlugin(),
-  ],
   devServer: {
     static: {
-      directory: path.resolve(__dirname, "dist"),
+      directory: path.resolve(__dirname, "dist"), // 静态文件目录，用于浏览器显示
+      publicPath: "/", // 浏览器访问路径
     },
-    compress: true,
+    hot: true, // 启动热更新
+    compress: true, // 启用gzip压缩
     port: 9000,
-    hot: true,
+    open: true, // 自动调起浏览器
+    client: {
+      overlay: {
+        // 出现错误或警告是否覆盖页面线上错误信息
+        warnings: true,
+        errors: true,
+      },
+      progress: true,
+    },
+    proxy: {
+      // 代理
+    },
   },
-};
+  devtool: "eval-cheap-module-source-map",
+  watchOptions: {
+    // 监控文件相关配置
+    poll: true,
+    ignored: /node_modules/,
+    aggregateTimeout: 300, // 默认值, 当你连续改动时候, webpack可以设置构建延迟时间(防抖)
+  },
+});
